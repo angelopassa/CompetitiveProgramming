@@ -3,7 +3,7 @@ fn main() {
         "Test 1: {}",
         trap(Vec::from([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
     );
-    println!("Test 1: {}", trap(Vec::from([4, 2, 0, 3, 2, 5])));
+    println!("Test 2: {}", trap(Vec::from([4, 2, 0, 3, 2, 5])));
 }
 
 fn trap(height: Vec<i32>) -> i32 {
