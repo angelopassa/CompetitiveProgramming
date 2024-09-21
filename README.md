@@ -4,4 +4,5 @@
 
 | Problem | Time Complexity | Documentation |
 | - | - | - |
-| Trapping Rain Water | $O(n)$ | no |
+| Trapping Rain Water | $O(n)$ | :white_check_mark: |
+| Maximum of All Subarrays of Size k | $O(n)$ | no |
