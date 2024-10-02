@@ -4,5 +4,8 @@
 
 | Problem | Time Complexity | Documentation |
 | :- | :-: | :-: |
-| Trapping Rain Water | $O(n)$ | :white_check_mark: |
-| Maximum of All Subarrays of Size k | $O(n)$ | :white_check_mark: |
+| Trapping Rain Water | $\Theta(n)$ | :white_check_mark: |
+| Maximum of All Subarrays of Size k | $\Theta(n)$ | :white_check_mark: |
+| Next Greater Element | $\Theta(n)$ | :x: |
+| Sum Tree Keys | $\Theta(n)$ | :x: |
+| Maximum Path Sum | $\Theta(n)$ | :x: |
