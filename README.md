@@ -9,3 +9,6 @@
 | Next Greater Element | $\Theta(n)$ | :x: |
 | Sum Tree Keys | $\Theta(n)$ | :x: |
 | Maximum Path Sum | $\Theta(n)$ | :x: |
+| Find First and Last Position of Element in Sorted Array | $\Theta(log n)$ | :x: |
+| Find the minimum in a rotated sorted array | $\Theta(log n)$ | :x: |
+| Search for a peak in an (unsorted) array | $\Theta(log n)$ | :x: |

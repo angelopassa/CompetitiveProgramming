@@ -75,33 +75,33 @@ fn maximum_path_sum(tree: &Tree, u: Option<usize>) -> (i32, i32) {
         None => (0, i32::MIN),
         Some(v) => {
             let node = tree.nodes.get(v).unwrap();
-            let (sumL, currMaxL) = maximum_path_sum(tree, node.id_left);
-            let (sumR, currMaxR) = maximum_path_sum(tree, node.id_right);
-            let mut currSum = node.key + sumR;
+            let (sum_l, curr_max_l) = maximum_path_sum(tree, node.id_left);
+            let (sum_r, curr_max_r) = maximum_path_sum(tree, node.id_right);
+            let mut curr_sum = node.key + sum_r;
 
             if node.id_left != None && node.id_right != None {
-                if node.key + sumL > node.key + sumR {
-                    currSum = node.key + sumL;
+                if node.key + sum_l > node.key + sum_r {
+                    curr_sum = node.key + sum_l;
                 } else if node.id_right == None {
-                    currSum = node.key + sumL;
+                    curr_sum = node.key + sum_l;
                 }
             }
 
             if v == 0 && (node.id_left == None || node.id_right == None)
             {
                 (
-                    currSum,
+                    curr_sum,
                     cmp::max(
-                        sumL + sumR + node.key,
-                        cmp::max(currMaxL, cmp::max(currMaxR, currSum)),
+                        sum_l + sum_r + node.key,
+                        cmp::max(curr_max_l, cmp::max(curr_max_r, curr_sum)),
                     ),
                 )
             } else if node.id_left == None || node.id_right == None {
-                (currSum, i32::MIN)
+                (curr_sum, i32::MIN)
             } else {
                 return (
-                    currSum,
-                    cmp::max(sumL + sumR + node.key, cmp::max(currMaxL, currMaxR)),
+                    curr_sum,
+                    cmp::max(sum_l + sum_r + node.key, cmp::max(curr_max_l, curr_max_r)),
                 );
             }
         }
