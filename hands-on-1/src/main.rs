@@ -1,5 +1,4 @@
-use std::cmp::max;
-use std::cmp::min;
+use std::cmp::{max, min};
 
 fn main() {
     println!("Hello, world!");
@@ -84,7 +83,7 @@ impl Tree {
                 (
                     min(min_l, min(min_r, n)),
                     max(max_l, max(max_r, n)),
-                    is_bst_l && is_bst_r && n >= max_l && n <= min_r,
+                    is_bst_l && is_bst_r && n >= max_l && n < min_r,
                 )
             }
         }
@@ -125,7 +124,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_sum() {
+    fn test_bst() {
         let mut tree = Tree::with_root(10);
 
         assert_eq!(tree.is_bst(), true);
@@ -144,4 +143,7 @@ mod tests {
         tree.add_node(1, 0, true); // id 6
         assert_eq!(tree.maximum_path_sum(), 57);
     }
+
+    #[test]
+    fn test_mps() {}
 }
