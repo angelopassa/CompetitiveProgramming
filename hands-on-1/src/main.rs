@@ -103,16 +103,16 @@ impl Tree {
 
                 let (max_p, sum_l_to_r) = {
                     match (max_p_l, max_p_r) {
-                        (None, None) => (n, 0),
-                        (Some(v1), Some(v2)) => (max(v1, v2) + n, v1 + v2),
-                        (Some(v1), None) => (v1 + n, v1),
-                        (None, Some(v2)) => (v2 + n, v2),
+                        (None, None) => (n, i32::MIN),
+                        (Some(v1), None) => (v1 + n, i32::MIN),
+                        (None, Some(v2)) => (v2 + n, i32::MIN),
+                        (Some(v1), Some(v2)) => (max(v1, v2) + n, n + v1 + v2)
                     }
                 };
 
                 (
                     Some(max_p),
-                    max(curr_mps_l, max(curr_mps_r, n + sum_l_to_r)),
+                    max(curr_mps_l, max(curr_mps_r, sum_l_to_r)),
                 )
             }
         }
