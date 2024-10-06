@@ -12,3 +12,4 @@
 | Find First and Last Position of Element in Sorted Array | $\Theta(log{n})$ | :x: |
 | Find the minimum in a rotated sorted array | $\Theta(log{n})$ | :x: |
 | Search for a peak in an (unsorted) array | $\Theta(log{n})$ | :x: |
+| HandsOn 1 | - | :white_check_mark: |
