@@ -1,5 +1,7 @@
 # Report HandsOn 1
 
+> The implementation of binary trees has been slightly modified so that negative numbers can also be handled. Essentially the type of the `key` attribute of the tree has been changed from `u32` to `i32`.
+
 ## Binary Search Tree
 
 The `is_bst()` method makes use of the auxiliary function `is_bst_priv(node_id)`, which takes as input the index of the node in the vector `nodes`, representing the root tree from the subtree for which the property is to be verified. Wanting of course to verify it for the whole tree, we pass as index `0` representing the root.
@@ -20,6 +22,8 @@ These three conditions combined make it possible to check whether the current su
 
 ## Maximum Path Sum
 
+> The exercise trace on [GeeksForGeeks](https://www.geeksforgeeks.org/problems/maximum-path-sum/1) requires the calculation of the maximum path sum between two special nodes, where special nodes are understood to be those which are connected to at most one more node. So essentially these can only be the leaves of the tree and the root only in the case where one of the two subtrees is empty.
+
 Also for this function we use an auxiliary procedure `maximum_path_sum_priv(node_id)` invoked on the index of the root node.
 
 In this case, for each subtree, we decide to return a pair in which the first value represents the *highest cost from a leaf* of the subtree to reach the current root/node, while the second value represents the *maximum path sum* between two leaves of the subtree (which may then be a candidate for the trees containing the subtree being analysed).
@@ -37,5 +41,7 @@ Also in the second and third cases, the value associated with the maximum path s
 In the last case, where both the left and right subtrees exist, for the maximum path to `v` we take the max between the left and right subtrees, and for the maximum path sum we do the sum of the maximum paths of the two subtrees plus the current node.
 
 Finally, we restore the calculated maximum path (`max_p`) and the maximum path sum between the one in the left subtree, the one in the right subtree, and the calculated one passing through the current node.
+
+To respect the constraint stated at the beginning, in the case where `u` is the root of the entire tree, and this is a special node, we also add the best path from a leaf to the root (which will belong to the only existing subtree) to the candidate values as maximum path sum.
 
 The `maximum_path_sum` function will then return the last value of the tuple returned on the call made by the helper function on the root node of the tree.

@@ -13,3 +13,5 @@
 | Find the minimum in a rotated sorted array | $\Theta(log{n})$ | :x: |
 | Search for a peak in an (unsorted) array | $\Theta(log{n})$ | :x: |
 | HandsOn 1 | - | :white_check_mark: |
+| Check if All the Integers in a Range Are Covered | $\Theta(n) | :x: |
+| Longest k-Good Segment | $\Theta(n)$ | :x: |

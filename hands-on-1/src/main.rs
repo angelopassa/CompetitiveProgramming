@@ -20,7 +20,7 @@ impl Node {
     }
 }
 
-struct Tree {
+pub struct Tree {
     nodes: Vec<Node>,
 }
 
@@ -106,14 +106,17 @@ impl Tree {
                         (None, None) => (n, i32::MIN),
                         (Some(v1), None) => (v1 + n, i32::MIN),
                         (None, Some(v2)) => (v2 + n, i32::MIN),
-                        (Some(v1), Some(v2)) => (max(v1, v2) + n, n + v1 + v2)
+                        (Some(v1), Some(v2)) => (max(v1, v2) + n, n + v1 + v2),
                     }
                 };
 
-                (
-                    Some(max_p),
-                    max(curr_mps_l, max(curr_mps_r, sum_l_to_r)),
-                )
+                let mut to_compute_max = vec![curr_mps_l, curr_mps_r, sum_l_to_r];
+
+                if v == 0 && (self.nodes[v].id_left.is_none() || self.nodes[v].id_right.is_none()) {
+                    to_compute_max.push(max_p);
+                }
+
+                (Some(max_p), *to_compute_max.iter().max().unwrap())
             }
         }
     }
@@ -125,25 +128,96 @@ mod tests {
 
     #[test]
     fn test_bst() {
-        let mut tree = Tree::with_root(10);
+        let mut tree1 = Tree::with_root(10);
+        tree1.add_node(0, 20, false); // parent_id = 1
+        tree1.add_node(1, 15, true); // parent_id = 2
+        tree1.add_node(1, 32, false); // parent_id = 3
+        tree1.add_node(2, 17, false); // parent_id = 4
+        tree1.add_node(3, 50, false); // parent_id = 5
+        assert!(tree1.is_bst());
 
-        assert_eq!(tree.is_bst(), true);
+        let mut tree2 = Tree::with_root(-40);
+        tree2.add_node(0, -50, true); // parent_id = 1
+        tree2.add_node(0, 0, false); // parent_id = 2
+        tree2.add_node(1, -45, false); // parent_id = 3
+        tree2.add_node(2, -10, true); // parent_id = 4
+        tree2.add_node(2, 120, false); // parent_id = 5
+        assert!(tree2.is_bst());
 
-        tree.add_node(0, 5, true); // id 1
-        tree.add_node(0, 22, false); // id 2
+        let mut tree3 = Tree::with_root(128);
+        tree3.add_node(0, 190, false); // parent_id = 1
+        tree3.add_node(1, 192, false); // parent_id = 2
+        tree3.add_node(2, 202, false); // parent_id = 3
+        tree3.add_node(3, 104, true); // parent_id = 4
+        tree3.add_node(4, 303, true); // parent_id = 5
+        assert!(!tree3.is_bst());
 
-        assert_eq!(tree.is_bst(), true);
+        let mut tree4 = Tree::with_root(-9);
+        tree4.add_node(0, 10, false); // parent_id = 1
+        tree4.add_node(0, -10, true); // parent_id = 2
+        tree4.add_node(1, 45, false); // parent_id = 3
+        tree4.add_node(2, -9, false); // parent_id = 4
+        tree4.add_node(2, -13, true); // parent_id = 5
+        assert!(tree4.is_bst());
 
-        tree.add_node(1, 7, false); // id 3
-        tree.add_node(2, 20, true); // id 4
-
-        assert_eq!(tree.is_bst(), true);
-
-        tree.add_node(3, -30, true); // id 5
-        tree.add_node(1, 0, true); // id 6
-        assert_eq!(tree.maximum_path_sum(), 57);
+        let mut tree5 = Tree::with_root(60);
+        tree5.add_node(0, 70, false); // parent_id = 1
+        tree5.add_node(0, 10, true); // parent_id = 2
+        tree5.add_node(2, 20, false); // parent_id = 3
+        tree5.add_node(2, 30, true); // parent_id = 4
+        tree5.add_node(3, -13, true); // parent_id = 5
+        assert!(!tree5.is_bst());
     }
 
     #[test]
-    fn test_mps() {}
+    fn test_mps() {
+        let mut tree1 = Tree::with_root(20);
+        tree1.add_node(0, -10, false); // parent_id = 1
+        tree1.add_node(0, -20, true); // parent_id = 2
+        tree1.add_node(1, 45, false); // parent_id = 3
+        tree1.add_node(2, 28, false); // parent_id = 4
+        tree1.add_node(2, 7, true); // parent_id = 5
+        tree1.add_node(4, -50, false); // parent_id = 6
+        tree1.add_node(4, -30, true); // parent_id = 7
+        assert_eq!(tree1.maximum_path_sum(), 42);
+
+        let mut tree2 = Tree::with_root(100);
+        tree2.add_node(0, -10, false); // parent_id = 1
+        tree2.add_node(0, 30, true); // parent_id = 2
+        tree2.add_node(2, -17, true); // parent_id = 3
+        tree2.add_node(2, -40, false); // parent_id = 4
+        tree2.add_node(3, -50, true); // parent_id = 5
+        tree2.add_node(4, 8, false); // parent_id = 6
+        tree2.add_node(1, 18, false); // parent_id = 7
+        tree2.add_node(7, 57, true); // parent_id = 8
+        tree2.add_node(7, 0, false); // parent_id = 9
+        tree2.add_node(9, 200, true); // parent_id = 10
+        assert_eq!(tree2.maximum_path_sum(), 306);
+
+        let mut tree3 = Tree::with_root(20);
+        tree3.add_node(0, 40, true); // parent_id = 1
+        tree3.add_node(0, -30, false); // parent_id = 2
+        tree3.add_node(1, 30, true); // parent_id = 3
+        tree3.add_node(1, 0, false); // parent_id = 4
+        tree3.add_node(3, -20, true); // parent_id = 5
+        tree3.add_node(4, 15, false); // parent_id = 6
+        assert_eq!(tree3.maximum_path_sum(), 65);
+
+        let mut tree4 = Tree::with_root(5);
+        tree4.add_node(0, 30, true); // parent_id = 1
+        tree4.add_node(1, 10, true); // parent_id = 2
+        tree4.add_node(1, -20, false); // parent_id = 3
+        tree4.add_node(3, 20, false); // parent_id = 4
+        assert_eq!(tree4.maximum_path_sum(), 45);
+
+        let mut tree5 = Tree::with_root(-30);
+        tree5.add_node(0, 24, true); // parent_id = 1
+        tree5.add_node(1, -20, true); // parent_id = 2
+        tree5.add_node(2, 10, false); // parent_id = 3
+        tree5.add_node(3, 1, false); // parent_id = 4
+        assert_eq!(tree5.maximum_path_sum(), -15);
+
+        let tree6 = Tree::with_root(50);
+        assert_eq!(tree6.maximum_path_sum(), 50);
+    }
 }

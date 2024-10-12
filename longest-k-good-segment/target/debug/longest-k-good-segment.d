@@ -1,0 +1,1 @@
+/Users/angelopassarelli/Desktop/CompetitiveProgramming/longest-k-good-segment/target/debug/longest-k-good-segment: /Users/angelopassarelli/Desktop/CompetitiveProgramming/longest-k-good-segment/src/main.rs
