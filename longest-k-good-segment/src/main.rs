@@ -3,7 +3,7 @@ use std::collections::HashMap;
 fn main() {
     println!(
         "{:?}",
-        longest_k_good_segment(vec![1, 1, 1, 2, 3, 4, 4, 5, 6, 6, 1, 2, 3, 4, 5, 6], 1)
+        longest_k_good_segment(vec![1, 1, 1, 2, 3, 4, 4, 5, 6, 6, 1, 2, 3, 4, 5, 6], 2)
     );
 }
 

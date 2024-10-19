@@ -15,3 +15,6 @@
 | HandsOn 1 | - | :white_check_mark: |
 | Check if All the Integers in a Range Are Covered | $\Theta(n)$ | :x: |
 | Longest k-Good Segment | $\Theta(n)$ | :x: |
+| Subarray Sum Equals K | $\Theta(n)$ | :x: |
+| Continuous Subarray Sum | $\Theta(n)$ | :x: |
+| Good Subarrays | $\Theta(n)$ | :x: |
