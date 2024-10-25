@@ -19,4 +19,4 @@
 | Continuous Subarray Sum | $\Theta(n)$ | :x: |
 | Good Subarrays | $\Theta(n)$ | :x: |
 | Update the array | $\Theta(u \cdot \log{n} + q \cdot \log{n})$ | :x: |
-| Pashmak and Parmida’s problem | \Omega(n \cdot \log{n}) | :x: |
+| Pashmak and Parmida’s problem | $\Theta(n \cdot \log{n})$ | :x: |
