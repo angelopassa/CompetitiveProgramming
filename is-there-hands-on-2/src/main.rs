@@ -52,7 +52,7 @@ pub struct SegmentTree {
 impl SegmentTree {
     pub fn with_len(n: usize) -> Self {
         Self {
-            tree: vec![HashSet::new(); 4 * n + 4],
+            tree: vec![HashSet::new(); 2 * n + 1],
             size: n + 1,
         }
     }
@@ -70,10 +70,6 @@ impl SegmentTree {
         for (i, &point) in sweep_line.iter().enumerate() {
             val = point + count;
             count += point;
-
-            if val < 0 {
-                val = 0;
-            }
 
             self.add_point(i, val as u64);
         }
@@ -95,11 +91,11 @@ impl SegmentTree {
             }
 
             if point <= mid {
+                current_node = current_node + 1;
                 right = mid;
-                current_node = 2 * current_node + 1;
             } else {
+                current_node = current_node + 2 * (mid - left + 1);
                 left = mid + 1;
-                current_node = 2 * current_node + 2;
             }
         }
     }
@@ -129,7 +125,7 @@ impl SegmentTree {
 
         let mid = (my_i + my_j) / 2;
 
-        self.is_there_inner(my_i, mid, 2 * my_pos + 1, i, j, k)
-            || self.is_there_inner(mid + 1, my_j, 2 * my_pos + 2, i, j, k)
+        self.is_there_inner(my_i, mid, my_pos + 1, i, j, k)
+            || self.is_there_inner(mid + 1, my_j, my_pos + 2 * (mid - my_i + 1), i, j, k)
     }
 }

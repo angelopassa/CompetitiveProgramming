@@ -66,8 +66,8 @@ impl MinMax {
         assert!(n > 0);
 
         Self {
-            segment_tree: vec![u64::MIN; 4 * n],
-            lazy_tree: vec![u64::MAX; 4 * n],
+            segment_tree: vec![u64::MIN; 2 * n - 1],
+            lazy_tree: vec![u64::MAX; 2 * n - 1],
             size: n,
         }
     }
@@ -78,10 +78,12 @@ impl MinMax {
                 self.segment_tree[pos] = self.lazy_tree[pos];
 
                 if my_i != my_j {
-                    let mut children = 2 * pos + 1;
+                    let mut children = pos + 1;
                     self.lazy_tree[children] = min(self.lazy_tree[children], self.lazy_tree[pos]);
 
-                    children += 1;
+                    let mid = (my_i + my_j) / 2;
+
+                    children += 2 * (mid - my_i + 1) - 1;
                     self.lazy_tree[children] = min(self.lazy_tree[children], self.lazy_tree[pos]);
                 }
             }
@@ -112,8 +114,8 @@ impl MinMax {
         let mid = (my_i + my_j) / 2;
 
         max(
-            self.max_inner(i, j, my_i, mid, 2 * my_pos + 1),
-            self.max_inner(i, j, mid + 1, my_j, 2 * my_pos + 2),
+            self.max_inner(i, j, my_i, mid, my_pos + 1),
+            self.max_inner(i, j, mid + 1, my_j, my_pos + 2 * (mid - my_i + 1)),
         )
     }
 
@@ -152,8 +154,8 @@ impl MinMax {
         let mid = (my_i + my_j) / 2;
 
         self.segment_tree[my_pos] = max(
-            self.update_inner(i, j, my_i, mid, 2 * my_pos + 1, t),
-            self.update_inner(i, j, mid + 1, my_j, 2 * my_pos + 2, t),
+            self.update_inner(i, j, my_i, mid, my_pos + 1, t),
+            self.update_inner(i, j, mid + 1, my_j, my_pos + 2 * (mid - my_i + 1), t),
         );
 
         self.segment_tree[my_pos]
