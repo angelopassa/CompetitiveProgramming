@@ -1,6 +1,6 @@
 use std::{
     cmp::{max, min},
-    fs, io,
+    fs, io, u64,
 };
 
 const N_TEST: usize = 11;
@@ -21,9 +21,8 @@ fn main() -> io::Result<()> {
         let mut i = 2;
 
         let mut s = MinMax::with_len(n);
-        for num in 0..n {
-            s.put_item(num + 1, nums[num + i]);
-        }
+
+        s.build_tree(nums[i..(n + i)].to_vec());
 
         i += n;
 
@@ -73,23 +72,21 @@ impl MinMax {
     }
 
     fn update_node_from_lazy(&mut self, pos: usize, my_i: usize, my_j: usize) {
-        if self.lazy_tree[pos] != u64::MAX {
-            if self.segment_tree[pos] > self.lazy_tree[pos] || self.segment_tree[pos] == 0 {
-                self.segment_tree[pos] = self.lazy_tree[pos];
+        if self.segment_tree[pos] > self.lazy_tree[pos] {
+            self.segment_tree[pos] = self.lazy_tree[pos];
 
-                if my_i != my_j {
-                    let mut children = pos + 1;
-                    self.lazy_tree[children] = min(self.lazy_tree[children], self.lazy_tree[pos]);
+            if my_i != my_j {
+                let mut children = pos + 1;
+                self.lazy_tree[children] = min(self.lazy_tree[children], self.lazy_tree[pos]);
 
-                    let mid = (my_i + my_j) / 2;
+                let mid = (my_i + my_j) / 2;
 
-                    children += 2 * (mid - my_i + 1) - 1;
-                    self.lazy_tree[children] = min(self.lazy_tree[children], self.lazy_tree[pos]);
-                }
+                children += 2 * (mid - my_i + 1) - 1;
+                self.lazy_tree[children] = min(self.lazy_tree[children], self.lazy_tree[pos]);
             }
-
-            self.lazy_tree[pos] = u64::MAX;
         }
+
+        self.lazy_tree[pos] = u64::MAX;
     }
 
     pub fn max(&mut self, i: usize, j: usize) -> u64 {
@@ -143,9 +140,9 @@ impl MinMax {
         }
 
         if i <= my_i && j >= my_j {
-            if t < self.segment_tree[my_pos] || self.segment_tree[my_pos] == 0 {
+            if t < self.segment_tree[my_pos] {
                 self.lazy_tree[my_pos] = t;
-                return self.lazy_tree[my_pos];
+                return t;
             }
 
             return self.segment_tree[my_pos];
@@ -163,5 +160,37 @@ impl MinMax {
 
     pub fn put_item(&mut self, pos: usize, val: u64) {
         self.update(pos, pos, val);
+    }
+
+    pub fn build_tree(&mut self, vec: Vec<u64>) {
+        assert_eq!(self.size, vec.len());
+
+        let mut left;
+        let mut right;
+        let mut mid;
+        let mut current_pos;
+        for (i, &x) in vec.iter().enumerate() {
+            left = 0;
+            right = self.size - 1;
+            current_pos = 0;
+
+            while left < right {
+                if self.segment_tree[current_pos] < x {
+                    self.segment_tree[current_pos] = x;
+                }
+
+                mid = (left + right) / 2;
+
+                if i <= mid {
+                    current_pos += 1;
+                    right = mid;
+                } else {
+                    current_pos += 2 * (mid - left + 1);
+                    left = mid + 1;
+                }
+            }
+
+            self.segment_tree[current_pos] = x;
+        }
     }
 }
