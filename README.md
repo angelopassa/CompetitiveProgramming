@@ -20,5 +20,5 @@
 | Good Subarrays                                          |                 $\Theta(n)$                 |        :x:         |
 | Update the array                                        | $\Theta(u \cdot \log{n} + q \cdot \log{n})$ |        :x:         |
 | Pashmak and Parmida’s problem                           |          $\Theta(n \cdot \log{n})$          |        :x:         |
-| HandsOn 2 - Min and Max                                 |         $O((n + m) \cdot \log{n})$          |        :x:         |
-| HandsOn 2 - Is There                                    |         $O((n + m) \cdot \log{n})$          |        :x:         |
+| HandsOn 2 - Min and Max                                 |         $O((n + m) \cdot \log{n})$          |        :white_check_mark:         |
+| HandsOn 2 - Is There                                    |         $O((n + m) \cdot \log{n})$          |        :white_check_mark:         |
