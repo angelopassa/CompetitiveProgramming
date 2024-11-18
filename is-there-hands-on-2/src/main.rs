@@ -4,7 +4,7 @@ const N_TEST: usize = 8;
 
 fn main() -> io::Result<()> {
     for test_num in 0..N_TEST {
-        println!("Executing Test #{}", test_num);
+        print!("Executing Test #{}  ", test_num);
         let content = fs::read_to_string(format!("Testset_handson2_p2/input{}.txt", test_num))?;
 
         let nums: Vec<usize> = content
@@ -39,6 +39,7 @@ fn main() -> io::Result<()> {
         let output = fs::read_to_string(format!("Testset_handson2_p2/output{}.txt", test_num))?;
 
         assert_eq!(output, results);
+        println!("Passed!");
     }
 
     Ok(())
@@ -91,10 +92,10 @@ impl SegmentTree {
             }
 
             if point <= mid {
-                current_node = current_node + 1;
+                current_node += 1;
                 right = mid;
             } else {
-                current_node = current_node + 2 * (mid - left + 1);
+                current_node += 2 * (mid - left + 1);
                 left = mid + 1;
             }
         }

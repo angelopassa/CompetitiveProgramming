@@ -1,13 +1,13 @@
 use std::{
     cmp::{max, min},
-    fs, io, u64,
+    fs, io,
 };
 
 const N_TEST: usize = 11;
 
 fn main() -> io::Result<()> {
     for test_num in 0..N_TEST {
-        println!("Executing Test #{}", test_num);
+        print!("Executing Test #{}  ", test_num);
         let content = fs::read_to_string(format!("Testset_handson2_p1/input{}.txt", test_num))?;
 
         let nums: Vec<u64> = content
@@ -49,6 +49,7 @@ fn main() -> io::Result<()> {
         let output = fs::read_to_string(format!("Testset_handson2_p1/output{}.txt", test_num))?;
 
         assert_eq!(output, results);
+        println!("Passed!");
     }
 
     Ok(())
@@ -65,7 +66,7 @@ impl MinMax {
         assert!(n > 0);
 
         Self {
-            segment_tree: vec![u64::MIN; 2 * n - 1],
+            segment_tree: vec![0; 2 * n - 1],
             lazy_tree: vec![u64::MAX; 2 * n - 1],
             size: n,
         }
@@ -158,39 +159,24 @@ impl MinMax {
         self.segment_tree[my_pos]
     }
 
-    pub fn put_item(&mut self, pos: usize, val: u64) {
-        self.update(pos, pos, val);
-    }
-
     pub fn build_tree(&mut self, vec: Vec<u64>) {
         assert_eq!(self.size, vec.len());
 
-        let mut left;
-        let mut right;
-        let mut mid;
-        let mut current_pos;
-        for (i, &x) in vec.iter().enumerate() {
-            left = 0;
-            right = self.size - 1;
-            current_pos = 0;
+        self.build_tree_inner(&vec, 0, self.size - 1, 0);
+    }
 
-            while left < right {
-                if self.segment_tree[current_pos] < x {
-                    self.segment_tree[current_pos] = x;
-                }
-
-                mid = (left + right) / 2;
-
-                if i <= mid {
-                    current_pos += 1;
-                    right = mid;
-                } else {
-                    current_pos += 2 * (mid - left + 1);
-                    left = mid + 1;
-                }
-            }
-
-            self.segment_tree[current_pos] = x;
+    fn build_tree_inner(&mut self, vec: &Vec<u64>, my_i: usize, my_j: usize, my_pos: usize) -> u64 {
+        if my_i == my_j {
+            self.segment_tree[my_pos] = vec[my_i];
+            return vec[my_i];
         }
+
+        let mid = (my_i + my_j) / 2;
+        self.segment_tree[my_pos] = max(
+            self.build_tree_inner(vec, my_i, mid, my_pos + 1),
+            self.build_tree_inner(vec, mid + 1, my_j, my_pos + 2 * (mid - my_i + 1)),
+        );
+
+        self.segment_tree[my_pos]
     }
 }
