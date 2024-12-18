@@ -24,4 +24,4 @@
 | HandsOn 2 - Is There                                    |         $O((n + m) \cdot \log{n})$          | :white_check_mark: |
 | Longest Common Subsequence                              |             $\Theta(n \cdot m)$             |        :x:         |
 | HandsOn 3 - Holiday Planning                            |              $O(n \cdot D^2)$               | :white_check_mark: |
-| HandsOn 3 - Design a Course                             |             $O(n \cdot \log n)$             | :white_check_mark: |
+| HandsOn 3 - Design a Course                             |            $O(n \cdot \log{n})$             | :white_check_mark: |
