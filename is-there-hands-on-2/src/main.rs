@@ -67,12 +67,10 @@ impl SegmentTree {
         }
 
         let mut count = 0;
-        let mut val;
         for (i, &point) in sweep_line.iter().enumerate() {
-            val = point + count;
             count += point;
 
-            self.add_point(i, val as u64);
+            self.add_point(i, count as u64);
         }
     }
 

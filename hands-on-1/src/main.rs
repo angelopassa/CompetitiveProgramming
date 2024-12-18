@@ -32,7 +32,7 @@ impl Tree {
     }
 
     /// Adds a child to the node with `parent_id` and returns the id of the new node.
-    /// The new node has the specified `key`. The new node is the left  child of the  
+    /// The new node has the specified `key`. The new node is the left child of the  
     /// node `parent_id` iff `is_left` is `true`, the right child otherwise.
     ///
     /// # Panics
